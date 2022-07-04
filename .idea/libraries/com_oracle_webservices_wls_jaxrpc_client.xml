@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="com.oracle.webservices.wls.jaxrpc-client">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/com.oracle.webservices.wls.jaxrpc-client.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/coherence.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/lib/com.oracle.webservices.wls.jaxrpc-client.jar!/" />
+    </SOURCES>
+  </library>
+</component>

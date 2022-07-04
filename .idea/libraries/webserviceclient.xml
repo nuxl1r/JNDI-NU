@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="webserviceclient">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/webserviceclient.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

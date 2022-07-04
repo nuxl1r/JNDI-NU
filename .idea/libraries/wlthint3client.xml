@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="wlthint3client">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/wlthint3client.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/lib/wlthint3client.jar!/" />
+    </SOURCES>
+  </library>
+</component>
