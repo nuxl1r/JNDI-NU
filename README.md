@@ -235,6 +235,9 @@ public void doFilter(ServletRequest servletRequest, ServletResponse servletRespo
 
 ---
 
+## 🐲建议
+
+建议使用Java11 ，不推荐Java17，Java17可能出现BUG。
 
  ## 📷参考
  * https://github.com/veracode-research/rogue-jndi
