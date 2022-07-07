@@ -22,10 +22,10 @@
 
 ## 😈使用说明
 
-使用 ```java -jar JNDIExploit.jar -h``` 查看参数说明，其中 ```--ip``` 参数为必选参数
+使用 ```java -jar JNDI-NU.jar -h``` 查看参数说明，其中 ```--ip``` 参数为必选参数
 
 ```
-Usage: java -jar JNDIExploit.jar [options]
+Usage: java -jar JNDI-NU.jar [options]
   Options:
   * -i, --ip       Local ip address
     -rl, --rmiPort rmi bind port (default: 10990)
@@ -35,7 +35,7 @@ Usage: java -jar JNDIExploit.jar [options]
     -h, --help     Show this help
 ```
 
-使用 ```java -jar JNDIExploit.jar -u``` 查看支持的 LDAP 格式
+使用 ```java -jar JNDI-NU.jar.jar -u``` 查看支持的 LDAP 格式
 ```
 Supported LADP Queries：
 * all words are case INSENSITIVE when send to ldap server
