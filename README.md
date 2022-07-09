@@ -31,6 +31,7 @@ Usage: java -jar JNDI-NU.jar [options]
     -rl, --rmiPort rmi bind port (default: 10990)
     -l, --ldapPort Ldap bind port (default: 1389)
     -p, --httpPort Http bind port (default: 8080)
+    -py, --python  Python System Command ex: python3  python2 ...
     -u, --usage    Show usage (default: false)
     -h, --help     Show this help
 ```
