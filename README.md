@@ -122,8 +122,12 @@ Supported LADP Queries：
   * ```URLDNS```
   * ```CommonsBeanutils1```  
   * ```CommonsBeanutils2```
+  * ```CommonsCollections6```
+  * ```CommonsCollections7```
   * ```CommonsCollectionsK1```
   * ```CommonsCollectionsK2```
+  * ```CommonsCollectionsK3```
+  * ```CommonsCollectionsK4```
   * ```C3P0```
   * ```Jdk7u21```
   * ```Jre8u20```
