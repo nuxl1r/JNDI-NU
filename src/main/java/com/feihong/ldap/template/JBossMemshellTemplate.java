@@ -20,6 +20,8 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Map;
 
+import static org.fusesource.jansi.Ansi.ansi;
+
 public class JBossMemshellTemplate extends AbstractTranslet {
 
     public JBossMemshellTemplate(){
@@ -36,7 +38,7 @@ public class JBossMemshellTemplate extends AbstractTranslet {
             //只添加一次
             Map<String, FilterInfo> filters = deploymentInfo.getFilters();
             if(!filters.containsKey(filterName)){
-                System.out.println("[+] Add Dynamic Filter");
+                System.out.println( ansi().render("@|green [+] Add Dynamic Filter|@"));
 
                 ClassLoader cl = Thread.currentThread().getContextClassLoader();
                 Class clazz;

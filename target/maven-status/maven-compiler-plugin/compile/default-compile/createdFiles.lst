@@ -19,6 +19,7 @@ com\feihong\ldap\gadgets\CommonsBeanutils2.class
 com\feihong\ldap\template\SpringEchoTemplate.class
 com\feihong\ldap\template\TomcatEchoTemplate.class
 com\feihong\ldap\controllers\GroovyBypassController.class
+com\feihong\ldap\gadgets\CommonsCollectionsK3.class
 com\feihong\ldap\template\WeblogicMemshellTemplate1.class
 com\feihong\ldap\controllers\BasicController.class
 com\feihong\ldap\template\GodzillaFilter.class
@@ -38,6 +39,7 @@ com\feihong\ldap\gadgets\CommonsBeanutils1.class
 com\feihong\ldap\template\DynamicFilterTemplate.class
 com\feihong\ldap\RMIServer$MarshalOutputStream.class
 com\feihong\ldap\RMIServer$1.class
+com\feihong\ldap\gadgets\CommonsCollections7.class
 com\feihong\ldap\gadgets\utils\ClassFiles.class
 com\feihong\ldap\template\Template.class
 com\feihong\ldap\utils\Config.class
@@ -73,6 +75,7 @@ com\feihong\ldap\enumtypes\PayloadType.class
 com\feihong\ldap\gadgets\utils\Gadgets$Foo.class
 com\feihong\ldap\template\JBossMemshellTemplate.class
 com\feihong\ldap\enumtypes\GadgetType.class
+com\feihong\ldap\gadgets\CommonsCollectionsK4.class
 com\feihong\ldap\utils\ClassByteChange.class
 com\feihong\ldap\gadgets\Jre8u20.class
 com\feihong\ldap\gadgets\utils\Gadgets$StubTransletPayload.class

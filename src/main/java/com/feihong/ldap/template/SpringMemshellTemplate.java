@@ -13,12 +13,14 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 
+import static org.fusesource.jansi.Ansi.ansi;
+
 public class SpringMemshellTemplate extends AbstractTranslet {
 
     // 这种方式经过测试，可以兼容到 1.3.0.RELEASE
 
     public SpringMemshellTemplate(){
-        System.out.println("[+] Add Dynamic Interceptor");
+        System.out.println( ansi().render("@|green [+] Add Dynamic Interceptor|@"));
 
         try{
             // 1. 反射 org.springframework.context.support.LiveBeansView 类 applicationContexts 属性
